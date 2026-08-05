@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Our Portfolio Websites — a curated collection of websites built by Synapsium Technologies." />
+  <title>Our Portfolio | Synapsium Technologies</title>
+  
+  <link rel="icon" href="./images/favicon.png" />
+
+  <style>
+    /* =========================================================
+       SYNAPSIUM Technologies PORTFOLIO
+       ========================================================= */
+
+    :root {
+      --bg: #07111f;
+      --surface: #0c192b;
+      --surface-2: #101f34;
+      --text: #f5f8ff;
+      --muted: #8ea0b8;
+      --accent: #4d8dff;
+      --accent-2: #7c5cff;
+      --border: rgba(255,255,255,.09);
+      --shadow: 0 25px 70px rgba(0,0,0,.35);
+      --radius: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(77,141,255,.12), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(124,92,255,.10), transparent 28%),
+        var(--bg);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    /* Decorative background */
+    .ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .ambient::before,
+    .ambient::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: .16;
+    }
+
+    .ambient::before {
+      background: #4d8dff;
+      top: -220px;
+      left: -180px;
+    }
+
+    .ambient::after {
+      background: #7c5cff;
+      right: -180px;
+      bottom: -220px;
+    }
+
+    /* Main */
+    .page {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 70px 0 80px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 25px 0 58px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 13px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: #b9c9df;
+      background: rgba(255,255,255,.035);
+      font-size: .78rem;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      backdrop-filter: blur(12px);
+    }
+
+    .eyebrow span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 16px var(--accent);
+    }
+
+    h1 {
+      max-width: 850px;
+      margin: auto;
+      font-size: clamp(3rem, 8vw, 6.8rem);
+      line-height: .92;
+      letter-spacing: -.065em;
+      font-weight: 800;
+    }
+
+    h1 .gradient {
+      background: linear-gradient(110deg, #fff 20%, #8cb7ff 55%, #a78bfa 90%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 620px;
+      margin: 25px auto 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 20px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 12px 35px rgba(0,0,0,.18);
+      transition: transform .3s ease, background .3s ease, border-color .3s ease;
+    }
+
+    .more-btn:hover {
+      transform: translateY(-3px);
+      background: rgba(77,141,255,.12);
+      border-color: rgba(77,141,255,.4);
+    }
+
+    .arrow {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      font-size: .9rem;
+    }
+
+    /* Portfolio grid */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .portfolio-card {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(255,255,255,.065), rgba(255,255,255,.025));
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transform: translateY(0);
+      transition:
+        transform .45s cubic-bezier(.2,.8,.2,1),
+        border-color .45s ease,
+        box-shadow .45s ease;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(116,163,255,.35);
+      box-shadow: 0 35px 90px rgba(0,0,0,.48);
+    }
+
+    .image-wrap {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: #0b1524;
+    }
+
+    .image-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 45%, rgba(4,9,17,.65));
+      pointer-events: none;
+    }
+
+    .website-image {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform .75s cubic-bezier(.2,.8,.2,1), filter .5s ease;
+    }
+
+    .portfolio-card:hover .website-image {
+      transform: scale(1.07);
+      filter: saturate(1.1) contrast(1.04);
+    }
+
+    .view-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      background: rgba(3,9,18,.32);
+      backdrop-filter: blur(2px);
+      transition: opacity .35s ease;
+    }
+
+    .portfolio-card:hover .view-overlay {
+      opacity: 1;
+    }
+
+    .view-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 17px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      color: white;
+      background: rgba(8,17,31,.72);
+      backdrop-filter: blur(14px);
+      transform: translateY(10px);
+      transition: transform .4s ease, background .3s ease;
+    }
+
+    .portfolio-card:hover .view-btn {
+      transform: translateY(0);
+    }
+
+    .view-btn:hover {
+      background: rgba(77,141,255,.85);
+    }
+
+    .card-content {
+      padding: 20px 21px 22px;
+    }
+
+    .card-number {
+      color: #6f87a8;
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .card-title {
+      margin-top: 6px;
+      font-size: 1.18rem;
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+
+    .card-description {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.55;
+    }
+
+    /* Empty/image fallback */
+    .image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      text-align: center;
+      color: #8194ae;
+      background:
+        linear-gradient(135deg, rgba(77,141,255,.12), rgba(124,92,255,.08)),
+        repeating-linear-gradient(
+          45deg,
+          rgba(255,255,255,.025) 0,
+          rgba(255,255,255,.025) 1px,
+          transparent 1px,
+          transparent 9px
+        );
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(1,5,11,.86);
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .3s ease, visibility .3s ease;
+    }
+
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .modal-inner {
+      position: relative;
+      width: min(1400px, 100%);
+      max-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: scale(.94) translateY(10px);
+      transition: transform .4s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .modal.active .modal-inner {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-image {
+      display: block;
+      max-width: 100%;
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 18px;
+      box-shadow: 0 35px 100px rgba(0,0,0,.6);
+    }
+
+    .close-modal {
+      position: fixed;
+      top: 22px;
+      right: 24px;
+      z-index: 101;
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 50%;
+      color: white;
+      background: rgba(10,19,33,.8);
+      cursor: pointer;
+      font-size: 1.35rem;
+      transition: transform .25s ease, background .25s ease;
+    }
+
+    .close-modal:hover {
+      transform: rotate(90deg);
+      background: rgba(77,141,255,.7);
+    }
+
+    .modal-title {
+      position: fixed;
+      left: 24px;
+      top: 25px;
+      color: rgba(255,255,255,.85);
+      font-size: .9rem;
+      font-weight: 600;
+      z-index: 101;
+    }
+
+    footer {
+      padding-top: 55px;
+      text-align: center;
+      color: #61738d;
+      font-size: .8rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 760px) {
+      .page {
+        width: min(100% - 24px, 600px);
+        padding-top: 40px;
+      }
+
+      .hero {
+        padding-bottom: 38px;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 16vw, 5rem);
+      }
+
+      .hero p {
+        font-size: .92rem;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .portfolio-card {
+        border-radius: 23px;
+      }
+
+      .view-overlay {
+        opacity: 1;
+        align-items: flex-end;
+        justify-content: flex-end;
+        padding: 14px;
+        background: linear-gradient(transparent 50%, rgba(3,9,18,.45));
+        backdrop-filter: none;
+      }
+
+      .view-btn {
+        transform: none;
+        padding: 9px 13px;
+        font-size: .82rem;
+      }
+
+      .modal {
+        padding: 12px;
+      }
+
+      .modal-image {
+        max-height: 82vh;
+        border-radius: 12px;
+      }
+
+      .modal-title {
+        top: 18px;
+        left: 16px;
+        max-width: 65%;
+      }
+
+      .close-modal {
+        top: 12px;
+        right: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ambient"></div>
+
+  <main class="page">
+    <header class="hero">
+      <div class="eyebrow"><span></span> Selected Work</div>
+
+      <h1>
+        Our <span class="gradient">Portfolio</span><br />
+        Websites
+      </h1>
+
+      <p>
+        A selection of websites designed and developed with a focus on
+        modern UI, responsive experiences, performance and business impact.
+      </p>
+
+      <div class="hero-actions">
+        <a class="more-btn" href="https://synapsiumtechnologies.com" target="_blank" rel="noopener noreferrer">
+          More about us
+          <span class="arrow">↗</span>
+        </a>
+      </div>
+    </header>
+
+    <section class="portfolio-grid" id="portfolioGrid" aria-label="Portfolio websites"></section>
+
+    <footer>
+      © <span id="year"></span> Synapsium Technologies
+    </footer>
+  </main>
+
+  <!-- Full-screen image viewer -->
+  <div class="modal" id="imageModal" role="dialog" aria-modal="true" aria-label="Website preview">
+    <div class="modal-title" id="modalTitle"></div>
+    <button class="close-modal" id="closeModal" aria-label="Close image preview">×</button>
+
+    <div class="modal-inner">
+      <img class="modal-image" id="modalImage" src="" alt="" />
+    </div>
+  </div>
+
+  <script>
+
+    const portfolioData = [
+      {
+        title: "Website Project 01",
+        description: "Modern responsive business website.",
+        image: "././images/website-1.png"
+      },
+      {
+        title: "Website Project 02",
+        description: "Clean corporate web experience.",
+        image: "./images/website-2.png"
+      },
+      {
+        title: "Website Project 03",
+        description: "Conversion-focused landing experience.",
+        image: "./images/website-3.png"
+      },
+      {
+        title: "Website Project 04",
+        description: "Professional company website.",
+        image: "./images/website-4.png"
+      },
+      {
+        title: "Website Project 05",
+        description: "Modern service-based website.",
+        image: "./images/website-5.png"
+      },
+      {
+        title: "Website Project 06",
+        description: "Responsive website with polished UI.",
+        image: "./images/website-6.png"
+      },
+      {
+        title: "Website Project 07",
+        description: "Performance-focused web experience.",
+        image: "./images/website-7.png"
+      },
+      {
+        title: "Website Project 08",
+        description: "Custom digital presence for a growing brand.",
+        image: "./images/website-8.png"
+      }
+    ];
+
+    const grid = document.getElementById("portfolioGrid");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+    const modalTitle = document.getElementById("modalTitle");
+    const closeModal = document.getElementById("closeModal");
+
+    function createCard(project, index) {
+      const card = document.createElement("article");
+      card.className = "portfolio-card";
+      card.tabIndex = 0;
+
+      card.innerHTML = `
+        <div class="image-wrap">
+          <img
+            class="website-image"
+            src="${project.image}"
+            alt="${project.title} full page screenshot"
+            loading="${index < 2 ? "eager" : "lazy"}"
+          />
+
+          <div class="view-overlay">
+            <span class="view-btn">
+              View website
+              <span>↗</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="card-number">0${index + 1} / 08</div>
+          <h2 class="card-title">${project.title}</h2>
+          <p class="card-description">${project.description}</p>
+        </div>
+      `;
+
+      const image = card.querySelector(".website-image");
+
+      image.addEventListener("error", () => {
+        const placeholder = document.createElement("div");
+        placeholder.className = "image-placeholder";
+        placeholder.textContent = "Add your website screenshot here";
+        image.replaceWith(placeholder);
+      });
+
+      card.addEventListener("click", () => openModal(project));
+      card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openModal(project);
+        }
+      });
+
+      return card;
+    }
+
+    function openModal(project) {
+      modalImage.src = project.image;
+      modalImage.alt = `${project.title} full page screenshot`;
+      modalTitle.textContent = project.title;
+      modal.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeImageModal() {
+      modal.classList.remove("active");
+      document.body.style.overflow = "";
+      setTimeout(() => {
+        if (!modal.classList.contains("active")) {
+          modalImage.src = "";
+        }
+      }, 300);
+    }
+
+    portfolioData.forEach((project, index) => {
+      grid.appendChild(createCard(project, index));
+    });
+
+    closeModal.addEventListener("click", closeImageModal);
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        closeImageModal();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && modal.classList.contains("active")) {
+        closeImageModal();
+      }
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
